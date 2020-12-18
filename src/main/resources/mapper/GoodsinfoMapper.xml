@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qa.springboot.mapper.GoodsinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.qa.springboot.pojo.Goodsinfo" >
+    <id column="gdid" property="gdid" jdbcType="INTEGER" />
+    <result column="gdname" property="gdname" jdbcType="VARCHAR" />
+    <result column="stid" property="stid" jdbcType="INTEGER" />
+    <result column="gtkeywords" property="gtkeywords" jdbcType="VARCHAR" />
+    <result column="gtdate" property="gtdate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gdid, gdname, stid, gtkeywords, gtdate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qa.springboot.pojo.GoodsinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goodsinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goodsinfo
+    where gdid = #{gdid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goodsinfo
+    where gdid = #{gdid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qa.springboot.pojo.GoodsinfoExample" >
+    delete from goodsinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qa.springboot.pojo.Goodsinfo" >
+    insert into goodsinfo (gdid, gdname, stid, 
+      gtkeywords, gtdate)
+    values (#{gdid,jdbcType=INTEGER}, #{gdname,jdbcType=VARCHAR}, #{stid,jdbcType=INTEGER}, 
+      #{gtkeywords,jdbcType=VARCHAR}, #{gtdate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qa.springboot.pojo.Goodsinfo" >
+    insert into goodsinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gdid != null" >
+        gdid,
+      </if>
+      <if test="gdname != null" >
+        gdname,
+      </if>
+      <if test="stid != null" >
+        stid,
+      </if>
+      <if test="gtkeywords != null" >
+        gtkeywords,
+      </if>
+      <if test="gtdate != null" >
+        gtdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gdid != null" >
+        #{gdid,jdbcType=INTEGER},
+      </if>
+      <if test="gdname != null" >
+        #{gdname,jdbcType=VARCHAR},
+      </if>
+      <if test="stid != null" >
+        #{stid,jdbcType=INTEGER},
+      </if>
+      <if test="gtkeywords != null" >
+        #{gtkeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="gtdate != null" >
+        #{gtdate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qa.springboot.pojo.GoodsinfoExample" resultType="java.lang.Integer" >
+    select count(*) from goodsinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goodsinfo
+    <set >
+      <if test="record.gdid != null" >
+        gdid = #{record.gdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdname != null" >
+        gdname = #{record.gdname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stid != null" >
+        stid = #{record.stid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gtkeywords != null" >
+        gtkeywords = #{record.gtkeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gtdate != null" >
+        gtdate = #{record.gtdate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goodsinfo
+    set gdid = #{record.gdid,jdbcType=INTEGER},
+      gdname = #{record.gdname,jdbcType=VARCHAR},
+      stid = #{record.stid,jdbcType=INTEGER},
+      gtkeywords = #{record.gtkeywords,jdbcType=VARCHAR},
+      gtdate = #{record.gtdate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qa.springboot.pojo.Goodsinfo" >
+    update goodsinfo
+    <set >
+      <if test="gdname != null" >
+        gdname = #{gdname,jdbcType=VARCHAR},
+      </if>
+      <if test="stid != null" >
+        stid = #{stid,jdbcType=INTEGER},
+      </if>
+      <if test="gtkeywords != null" >
+        gtkeywords = #{gtkeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="gtdate != null" >
+        gtdate = #{gtdate,jdbcType=DATE},
+      </if>
+    </set>
+    where gdid = #{gdid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qa.springboot.pojo.Goodsinfo" >
+    update goodsinfo
+    set gdname = #{gdname,jdbcType=VARCHAR},
+      stid = #{stid,jdbcType=INTEGER},
+      gtkeywords = #{gtkeywords,jdbcType=VARCHAR},
+      gtdate = #{gtdate,jdbcType=DATE}
+    where gdid = #{gdid,jdbcType=INTEGER}
+  </update>
+</mapper>

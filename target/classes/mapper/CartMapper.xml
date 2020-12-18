@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qa.springboot.mapper.CartMapper" >
+  <resultMap id="BaseResultMap" type="com.qa.springboot.pojo.Cart" >
+    <id column="ctid" property="ctid" jdbcType="INTEGER" />
+    <result column="gdid" property="gdid" jdbcType="INTEGER" />
+    <result column="gdcount" property="gdcount" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="gsid" property="gsid" jdbcType="INTEGER" />
+    <result column="stid" property="stid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ctid, gdid, gdcount, userid, gsid, stid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qa.springboot.pojo.CartExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cart
+    where ctid = #{ctid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cart
+    where ctid = #{ctid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qa.springboot.pojo.CartExample" >
+    delete from cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qa.springboot.pojo.Cart" >
+    insert into cart (ctid, gdid, gdcount, 
+      userid, gsid, stid)
+    values (#{ctid,jdbcType=INTEGER}, #{gdid,jdbcType=INTEGER}, #{gdcount,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER}, #{gsid,jdbcType=INTEGER}, #{stid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qa.springboot.pojo.Cart" >
+    insert into cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ctid != null" >
+        ctid,
+      </if>
+      <if test="gdid != null" >
+        gdid,
+      </if>
+      <if test="gdcount != null" >
+        gdcount,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="gsid != null" >
+        gsid,
+      </if>
+      <if test="stid != null" >
+        stid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ctid != null" >
+        #{ctid,jdbcType=INTEGER},
+      </if>
+      <if test="gdid != null" >
+        #{gdid,jdbcType=INTEGER},
+      </if>
+      <if test="gdcount != null" >
+        #{gdcount,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="gsid != null" >
+        #{gsid,jdbcType=INTEGER},
+      </if>
+      <if test="stid != null" >
+        #{stid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qa.springboot.pojo.CartExample" resultType="java.lang.Integer" >
+    select count(*) from cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cart
+    <set >
+      <if test="record.ctid != null" >
+        ctid = #{record.ctid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdid != null" >
+        gdid = #{record.gdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdcount != null" >
+        gdcount = #{record.gdcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gsid != null" >
+        gsid = #{record.gsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.stid != null" >
+        stid = #{record.stid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cart
+    set ctid = #{record.ctid,jdbcType=INTEGER},
+      gdid = #{record.gdid,jdbcType=INTEGER},
+      gdcount = #{record.gdcount,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
+      gsid = #{record.gsid,jdbcType=INTEGER},
+      stid = #{record.stid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qa.springboot.pojo.Cart" >
+    update cart
+    <set >
+      <if test="gdid != null" >
+        gdid = #{gdid,jdbcType=INTEGER},
+      </if>
+      <if test="gdcount != null" >
+        gdcount = #{gdcount,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="gsid != null" >
+        gsid = #{gsid,jdbcType=INTEGER},
+      </if>
+      <if test="stid != null" >
+        stid = #{stid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ctid = #{ctid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qa.springboot.pojo.Cart" >
+    update cart
+    set gdid = #{gdid,jdbcType=INTEGER},
+      gdcount = #{gdcount,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      gsid = #{gsid,jdbcType=INTEGER},
+      stid = #{stid,jdbcType=INTEGER}
+    where ctid = #{ctid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectCartByUserid" resultMap="BaseResultMap" parameterType="Integer">
+  		select * from cart where userid=#{userid}
+  </select>
+</mapper>

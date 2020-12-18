@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qa.springboot.mapper.OrderlistMapper" >
+  <resultMap id="BaseResultMap" type="com.qa.springboot.pojo.Orderlist" >
+    <id column="olid" property="olid" jdbcType="VARCHAR" />
+    <result column="gdid" property="gdid" jdbcType="INTEGER" />
+    <result column="gdcount" property="gdcount" jdbcType="INTEGER" />
+    <result column="gsid" property="gsid" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="ofid" property="ofid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    olid, gdid, gdcount, gsid, price, ofid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qa.springboot.pojo.OrderlistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderlist
+    where olid = #{olid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orderlist
+    where olid = #{olid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qa.springboot.pojo.OrderlistExample" >
+    delete from orderlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qa.springboot.pojo.Orderlist" >
+    insert into orderlist (olid, gdid, gdcount, 
+      gsid, price, ofid)
+    values (#{olid,jdbcType=VARCHAR}, #{gdid,jdbcType=INTEGER}, #{gdcount,jdbcType=INTEGER}, 
+      #{gsid,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{ofid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qa.springboot.pojo.Orderlist" >
+    insert into orderlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="olid != null" >
+        olid,
+      </if>
+      <if test="gdid != null" >
+        gdid,
+      </if>
+      <if test="gdcount != null" >
+        gdcount,
+      </if>
+      <if test="gsid != null" >
+        gsid,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="ofid != null" >
+        ofid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="olid != null" >
+        #{olid,jdbcType=VARCHAR},
+      </if>
+      <if test="gdid != null" >
+        #{gdid,jdbcType=INTEGER},
+      </if>
+      <if test="gdcount != null" >
+        #{gdcount,jdbcType=INTEGER},
+      </if>
+      <if test="gsid != null" >
+        #{gsid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="ofid != null" >
+        #{ofid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qa.springboot.pojo.OrderlistExample" resultType="java.lang.Integer" >
+    select count(*) from orderlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderlist
+    <set >
+      <if test="record.olid != null" >
+        olid = #{record.olid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gdid != null" >
+        gdid = #{record.gdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdcount != null" >
+        gdcount = #{record.gdcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.gsid != null" >
+        gsid = #{record.gsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ofid != null" >
+        ofid = #{record.ofid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderlist
+    set olid = #{record.olid,jdbcType=VARCHAR},
+      gdid = #{record.gdid,jdbcType=INTEGER},
+      gdcount = #{record.gdcount,jdbcType=INTEGER},
+      gsid = #{record.gsid,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
+      ofid = #{record.ofid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qa.springboot.pojo.Orderlist" >
+    update orderlist
+    <set >
+      <if test="gdid != null" >
+        gdid = #{gdid,jdbcType=INTEGER},
+      </if>
+      <if test="gdcount != null" >
+        gdcount = #{gdcount,jdbcType=INTEGER},
+      </if>
+      <if test="gsid != null" >
+        gsid = #{gsid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="ofid != null" >
+        ofid = #{ofid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where olid = #{olid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qa.springboot.pojo.Orderlist" >
+    update orderlist
+    set gdid = #{gdid,jdbcType=INTEGER},
+      gdcount = #{gdcount,jdbcType=INTEGER},
+      gsid = #{gsid,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      ofid = #{ofid,jdbcType=VARCHAR}
+    where olid = #{olid,jdbcType=VARCHAR}
+  </update>
+</mapper>

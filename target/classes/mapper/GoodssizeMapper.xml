@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qa.springboot.mapper.GoodssizeMapper" >
+  <resultMap id="BaseResultMap" type="com.qa.springboot.pojo.Goodssize" >
+    <id column="gsid" property="gsid" jdbcType="INTEGER" />
+    <result column="gstext" property="gstext" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gsid, gstext
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qa.springboot.pojo.GoodssizeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goodssize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goodssize
+    where gsid = #{gsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goodssize
+    where gsid = #{gsid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qa.springboot.pojo.GoodssizeExample" >
+    delete from goodssize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qa.springboot.pojo.Goodssize" >
+    insert into goodssize (gsid, gstext)
+    values (#{gsid,jdbcType=INTEGER}, #{gstext,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qa.springboot.pojo.Goodssize" >
+    insert into goodssize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gsid != null" >
+        gsid,
+      </if>
+      <if test="gstext != null" >
+        gstext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gsid != null" >
+        #{gsid,jdbcType=INTEGER},
+      </if>
+      <if test="gstext != null" >
+        #{gstext,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qa.springboot.pojo.GoodssizeExample" resultType="java.lang.Integer" >
+    select count(*) from goodssize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goodssize
+    <set >
+      <if test="record.gsid != null" >
+        gsid = #{record.gsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gstext != null" >
+        gstext = #{record.gstext,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goodssize
+    set gsid = #{record.gsid,jdbcType=INTEGER},
+      gstext = #{record.gstext,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qa.springboot.pojo.Goodssize" >
+    update goodssize
+    <set >
+      <if test="gstext != null" >
+        gstext = #{gstext,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gsid = #{gsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qa.springboot.pojo.Goodssize" >
+    update goodssize
+    set gstext = #{gstext,jdbcType=VARCHAR}
+    where gsid = #{gsid,jdbcType=INTEGER}
+  </update>
+  <select id="selectSizeByGsid" resultType="String" parameterType="Integer">
+  		select gstext from goodssize where gsid=#{gsid}
+  </select>
+</mapper>
